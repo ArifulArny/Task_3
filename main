@@ -1,0 +1,34 @@
+import requests
+
+# Replace with your Google Maps API key
+api_key = "YOUR_API_KEY"
+
+# Set the location to query
+location = "San Francisco, CA"
+
+# Base URL for the Google Maps API
+base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+
+# Request parameters
+params = {
+    "address": location,
+    "key": api_key
+}
+
+# Send the GET request to the Google Maps API
+response = requests.get(base_url, params=params)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON response
+    data = response.json()
+
+    # Extract the latitude and longitude from the response
+    latitude = data["results"][0]["geometry"]["location"]["lat"]
+    longitude = data["results"][0]["geometry"]["location"]["lng"]
+
+    # Process the extracted data
+    print(f"Latitude: {latitude}")
+    print(f"Longitude: {longitude}")
+else:
+    print(f"Error: {response.status_code}")
